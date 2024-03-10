@@ -1,4 +1,4 @@
-import { Tooltip } from './tooltip';
+import Tooltip from './tooltip';
 
 const form = document.querySelector('.form');
 
@@ -28,13 +28,13 @@ const showTooltip = (message, el) => {
 
 const getError = (el) => {
   const errorKey = Object.keys(ValidityState.prototype).find((key) => {
-    if (!el.name) return;
-    if (key === 'valid') return;
+    if (!el.name) return null;
+    if (key === 'valid') return false;
 
     return el.validity[key];
   });
 
-  if (!errorKey) return;
+  if (!errorKey) return null;
 
   return errors[el.name][errorKey];
 };
@@ -45,11 +45,11 @@ form.addEventListener('submit', (e) => {
   actualMessages.forEach((message) => tooltipFactory.removeTooltip(message.id));
   actualMessages = [];
 
-  if (form.checkValidity()) {
-    console.log('valid');
-  } else {
-    console.log('invalid');
-  }
+  // if (form.checkValidity()) {
+  //   console.log('valid');
+  // } else {
+  //   console.log('invalid');
+  // }
 
   const { elements } = form;
 
@@ -60,9 +60,10 @@ form.addEventListener('submit', (e) => {
       showTooltip(error, elem);
       return true;
     }
+    return false;
   });
 
-  console.log('submit');
+  // console.log('submit');
 });
 
 const elementOnBlur = (e) => {
@@ -82,9 +83,6 @@ const elementOnBlur = (e) => {
   el.removeEventListener('blur', elementOnBlur);
 };
 
-// form.elements.forEach((el) => el.addEventListener('focus', () => {
-//   el.addEventListener('blur', elementOnBlur);
-// }));
 [...form.elements].forEach((el) => {
   el.addEventListener('focus', () => {
     el.addEventListener('blur', elementOnBlur);
@@ -106,15 +104,14 @@ window.addEventListener('beforeunload', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const json = localStorage.getItem('formData');
-
   let formData;
 
-  try {
-    formData = JSON.parse(json);
-  } catch (error) {
-    console.log(error);
-  }
+  // const json = localStorage.getItem('formData');
+  // try {
+  //   formData = JSON.parse(json);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   if (formData) {
     Object.keys(formData).forEach((key) => {

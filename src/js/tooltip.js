@@ -1,4 +1,4 @@
-export class Tooltip {
+export default class Tooltip {
   constructor() {
     this._tooltips = [];
   }

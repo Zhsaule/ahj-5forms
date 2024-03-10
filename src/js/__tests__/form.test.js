@@ -1,4 +1,4 @@
-import { Tooltip } from '../tooltip';
+import Tooltip from '../tooltip';
 
 describe('Tooltip', () => {
   let tooltip;
